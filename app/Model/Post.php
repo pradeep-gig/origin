@@ -39,5 +39,8 @@ class Post extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'body' => array(
+				'rule' => 'notEmpty'	
+			)
 	);
 }
