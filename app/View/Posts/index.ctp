@@ -1,6 +1,9 @@
 <h1>Blog posts</h1>
 <?php echo $this->HTML->link('Add Post', array('controller' => 'posts', 'action' => 'add')); ?>
-<h4 style="float: right"> <?php echo $this->HTML->link('Log Out', array('controller' => 'users', 'action' => 'logout')); ?> </h4>
+<?php if($user_id != NULL){ ?>
+	<h4 style="float: right"> <?php echo $this->HTML->link('Log Out', array('controller' => 'users', 'action' => 'logout')); ?> </h4>	
+<?php }
+?>
 <table>
 	<tr style="background: red">
 		<th>Id</th>

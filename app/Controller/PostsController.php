@@ -5,6 +5,8 @@
 		public function index() {
 
 			$this->set('posts', $this->Post->find('all'));
+			$user_id = $this->Auth->user('id');
+			$this->set('user_id', $user_id);
 		}
 		public function view($id = null) {
 			if(!$id) {
