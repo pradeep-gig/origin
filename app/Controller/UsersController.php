@@ -12,7 +12,7 @@ class UsersController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('add', 'logout');
+		$this->Auth->allow('add', 'logout','useredit');
 	}
 /**
  * Components
@@ -64,6 +64,7 @@ class UsersController extends AppController {
 	public function add() {
 		$user_id = $this->Auth->user('id');
 			$this->set('user_id', $user_id);
+
 		if ($this->request->is('post')) {
 			$this->User->create();
 			$this->request->data['User']['role']='author';
@@ -94,18 +95,15 @@ class UsersController extends AppController {
 	public function edit($id = null) {
 		$user_id = $this->Auth->user('id');
 			$this->set('user_id', $user_id);
+			$role = $this->Auth->user('role');
+			$this->set('role', $role);	
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'));
-				if($this->Auth->users['role'] == "admin"){
 					return $this->redirect(array('action' => 'index'));	
-				}else if($this->Auth->users['role'] == "author") {
-					return $this->redirect(array('action' => 'view'));
-				}
-				
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
@@ -113,6 +111,29 @@ class UsersController extends AppController {
 			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
 			$this->request->data = $this->User->find('first', $options);
 		}
+	}
+
+	public function useredit() {
+		
+		$user_id = $this->Auth->user('id');
+			$this->set('user_id', $user_id);
+			$role = $this->Auth->user('role');
+			$this->set('role', $role);	
+		if (!$this->User->exists($user_id)) {
+			throw new NotFoundException(__('Invalid user'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->User->save($this->request->data)) {
+				$this->Session->setFlash(__('The user has been saved.'));
+					return $this->redirect(array('action' => 'index'));	
+			} else {
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+			}
+		} else {
+			$options = array('conditions' => array('User.' . $this->User->primaryKey => $user_id));
+			$this->request->data = $this->User->find('first', $options);
+		}
+		$this->render('edit');
 	}
 
 /**

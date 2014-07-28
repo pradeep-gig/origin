@@ -79,7 +79,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				 			'action' => 'index'), array("class" => "a")); ?>
 				 		<?php } elseif($role == "author"){ ?>
 				 			<?php echo $this->HTML->link('User Settings', array('controller' => 'users',
-				 			'action' => 'view',$user_id), array("class" => "a")); ?>
+				 			'action' => 'useredit'), array("class" => "a")); ?>
 				 			<?php } ?>
 				 	</li>
 				</ul>
