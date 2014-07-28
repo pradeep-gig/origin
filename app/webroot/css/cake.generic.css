@@ -29,6 +29,62 @@ body {
 	font-size:90%;
 	margin: 0;
 }
+.user {
+	background-color: #475291;
+    border: 1px solid #2e3b87;
+    float: right;
+    height: 49px;
+    margin-top: -10px;
+    width: auto;
+}
+.login{
+	float: right !important;
+}
+.user h5 a {
+	background-color: #475291 !important;
+	text-decoration: none !important;
+}
+.a {
+	text-decoration: none;
+	color: black;	
+}
+.user h5 {
+	padding-top: 12px;
+	padding-left: 5px;
+    padding-right: 2px;
+}
+.caret {
+   border-color: black transparent -moz-use-text-color;
+   border-color: black transparent;
+   border-style: solid solid dotted;
+   border-width: 4px 4px 0;
+   content: "";
+   display: inline-block;
+   height: 0;
+   margin-left: 2px;
+   vertical-align: middle;
+   width: 0;
+}
+.drop-down {
+	 border: 1px solid black;
+    color: white;
+    margin-right: 2.4%;
+    position: absolute;
+    right: 20px;
+    top: 54px;
+    width: auto;
+    z-index: 5;
+    display: none;
+}
+.drop-down ul li {
+	list-style: none;
+	margin: 0px;
+	padding-left: 2px;
+	color: black;
+}
+.open{
+	display: block;
+}
 a {
 	color: #003d4c;
 	text-decoration: underline;
@@ -81,10 +137,12 @@ p {
 	padding: 10px 20px;
 }
 #header h1 {
-	line-height:20px;
-	background: #003d4c url('../img/cake.icon.png') no-repeat left;
-	color: #fff;
-	padding: 0px 30px;
+	background: none repeat scroll 0 0 #003d4c;
+    color: #fff;
+    font-size: 18px;
+    line-height: 20px;
+    padding: 0 30px;
+    text-align: center;
 }
 #header h1 a {
 	color: #fff;

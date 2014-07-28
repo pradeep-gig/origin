@@ -27,6 +27,12 @@ class UsersController extends AppController {
  * @return void
  */
 	public function index() {
+			$user_id = $this->Auth->user('id');
+			$this->set('user_id', $user_id);
+			$username = $this->Auth->user('username');
+			$this->set('username', $username);
+			$role = $this->Auth->user('role');
+			$this->set('role', $role);
 		$this->User->recursive = 0;
 		$this->set('users', $this->Paginator->paginate());
 	}
@@ -39,6 +45,10 @@ class UsersController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		$user_id = $this->Auth->user('id');
+			$this->set('user_id', $user_id);
+			$role = $this->Auth->user('role');
+			$this->set('role', $role);
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}
@@ -52,14 +62,25 @@ class UsersController extends AppController {
  * @return void
  */
 	public function add() {
+		$user_id = $this->Auth->user('id');
+			$this->set('user_id', $user_id);
 		if ($this->request->is('post')) {
 			$this->User->create();
+			$this->request->data['User']['role']='author';
+			$un = $this->request->data['User']['username'];
+			$check_username = $this->User->find('first', array('conditions' => array('User.username' => $un)));
+			if(empty($check_username))
+			{
+
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
+		}else{
+			$this->Session->setFlash(__('The username already exist, try again with another name.'));
+		}
 		}
 	}
 
@@ -71,13 +92,20 @@ class UsersController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		$user_id = $this->Auth->user('id');
+			$this->set('user_id', $user_id);
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				if($this->Auth->users['role'] == "admin"){
+					return $this->redirect(array('action' => 'index'));	
+				}else if($this->Auth->users['role'] == "author") {
+					return $this->redirect(array('action' => 'view'));
+				}
+				
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
@@ -109,6 +137,8 @@ class UsersController extends AppController {
 	}
 
 	public function login() {
+		$user_id = $this->Auth->user('id');
+			$this->set('user_id', $user_id);
 		if($this->request->is('post')) {
 			if($this->Auth->login()) {
 				return $this->redirect($this->Auth->redirect());

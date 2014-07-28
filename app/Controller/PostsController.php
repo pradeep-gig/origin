@@ -2,13 +2,25 @@
 	class PostsController extends AppController {
 		public $helpers = array('HTML', 'Form', 'Session');
 		public $components =array('Session');
+		public function beforeFilter() {
+			$this->Auth->allow('index', 'view');
+		}
+
 		public function index() {
 
 			$this->set('posts', $this->Post->find('all'));
 			$user_id = $this->Auth->user('id');
 			$this->set('user_id', $user_id);
+			$username = $this->Auth->user('username');
+			$this->set('username', $username);
+			$role = $this->Auth->user('role');
+			$this->set('role', $role);
 		}
+
+
 		public function view($id = null) {
+			$user_id = $this->Auth->user('id');
+			$this->set('user_id', $user_id);
 			if(!$id) {
 				throw new NotFoundException(__('Invalid post'));
 			}
@@ -19,6 +31,8 @@
 			$this->set('post', $post);
 		}
 		public function add() {
+			$user_id = $this->Auth->user('id');
+			$this->set('user_id', $user_id);
 			if($this->request->is('post')) {
 				$this->request->data['Post']['user_id'] = $this->Auth->user('id');
 				if($this->Post->save($this->request->data)) {
@@ -29,6 +43,8 @@
 			}
 		}
 		public function edit($id = null) {
+			$user_id = $this->Auth->user('id');
+			$this->set('user_id', $user_id);
 			if(!$id) {
 				throw new NotFoundException(__('Invalid post'));
 			}

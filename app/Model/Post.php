@@ -3,6 +3,7 @@ App::uses('AppModel', 'Model');
 /**
  * Post Model
  *
+ * @property User $User
  */
 class Post extends AppModel {
 
@@ -13,38 +14,56 @@ class Post extends AppModel {
  */
 	public $displayField = 'title';
 
+
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
 /**
- * Validation rules
+ * belongsTo associations
  *
  * @var array
  */
-	public $validate = array(
-		'id' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'title' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'body' => array(
-				'rule' => 'notEmpty'	
-			)
+	public $belongsTo = array(
+		'User' => array(
+			'className' => 'User',
+			'foreignKey' => 'user_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
 	);
 
-	public function isOwnedBy($post, $user) {
-		return $this->field('id', array('id' => $post, 'user_id' => $user)) !== false;
-	}
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
+		public $validate = array(
+			'id' => array(
+				'notEmpty' => array(
+					'rule' => array('notEmpty'),
+					//'message' => 'Your custom message here',
+					//'allowEmpty' => false,
+					//'required' => false,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+			),
+			'title' => array(
+				'notEmpty' => array(
+					'rule' => array('notEmpty'),
+					//'message' => 'Your custom message here',
+					//'allowEmpty' => false,
+					//'required' => false,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+			),
+			'body' => array(
+					'rule' => 'notEmpty'	
+				)
+		);
+
+		public function isOwnedBy($post, $user) {
+			return $this->field('id', array('id' => $post, 'user_id' => $user)) !== false;
+		}
 }

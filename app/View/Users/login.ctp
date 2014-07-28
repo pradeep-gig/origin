@@ -1,5 +1,11 @@
+<?php
+echo $this->Html->css('style');
+echo $this->fetch('css');
+?>
+<div>
+	<p>If you dont have an account, create one for you now <?php echo $this->Html->link(__('Sign in'), array('action' => 'add')); ?></p>
+</div>
 <div class="users form">
-<?php echo $this->Session->flash('auth'); ?>
 <?php echo $this->Form->create('User'); ?>
 <fieldset>
 <legend>

@@ -32,6 +32,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 		echo $this->Html->css('cake.generic');
 
+		echo $this->Html->script('jquery-2.1.1');
+		echo $this->Html->script('profile-menu');
+
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
@@ -40,26 +43,55 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
+			<h1>Welcome To our Blog<span>
+				<?php if(!isset($user_id) && $user_id == NULL) { ?>
+						<div class="login-div">
+							<h5><?php echo $this->HTML->link('Log in', array('controller' => 'users', 'action' => 'login'), array('class' => 'login')); ?></h5>	
+						</div>
+				<?php } ?>
+
+				<?php if(isset($user_id) && $user_id != NULL){ ?>
+			<div class="user">
+				<h5><a href="#">Hi,<?php echo $username;?> <b class="caret"></b></a></h5>
+
+			</div>
+			<?php } ?>	
+			
+			</span></h1>
 		</div>
+
+	</div>
+
 		<div id="content">
+			<div class="drop-down">
+				<ul>
+					<li>
+						<?php echo $this->HTML->link('Home', array('controller' => 'posts',
+				 		'action' => 'index'), array("class" => "a")); ?>
+					</li>
+					<li>
+						<?php echo $this->HTML->link('Log Out', array('controller' => 'users',
+				 		'action' => 'logout'), array("class" => "a")); ?> 
+					</li>
+					<li>
+						<?php if($role == "admin"){ ?>
+							<?php echo $this->HTML->link('User Settings', array('controller' => 'users',
+				 			'action' => 'index'), array("class" => "a")); ?>
+				 		<?php } elseif($role == "author"){ ?>
+				 			<?php echo $this->HTML->link('User Settings', array('controller' => 'users',
+				 			'action' => 'view',$user_id), array("class" => "a")); ?>
+				 			<?php } ?>
+				 	</li>
+				</ul>
+				
+			</div>
 
 			<?php echo $this->Session->flash(); ?>
 
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div id="footer">
-			<?php echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false, 'id' => 'cake-powered')
-				);
-			?>
-			<p>
-				<?php echo $cakeVersion; ?>
-			</p>
+				
 		</div>
-	</div>
-	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>
