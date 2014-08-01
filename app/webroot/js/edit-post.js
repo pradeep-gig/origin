@@ -2,6 +2,7 @@ $(document).ready(function() {
 	$(".edit-button").on('click', function(e) {
 		e.preventDefault();
 		var post_id = $(this).next('.post-id').val();
+    var temp = $(this);
 		$.ajax({
            type: "post",
            url: "/Posts/postedit",
@@ -21,6 +22,28 @@ $(document).ready(function() {
                 width: 500
                });
 
+               $("#Save-post").on('click', function() {
+                var edited_id = $(".Epost-id").val();
+                var edited_title = $(".Epost-title").val();
+                var edited_body = $(".Epost-body").val();
+                $.ajax({
+                        type: "post",
+                        url: "/Posts/posteditdone",
+                        dataType: "json",
+                        data: {edited_title : edited_title,
+                               edited_body  : edited_body,
+                               edited_id    : edited_id
+                        },
+                        success: function(data){
+                          temp.parent().find('.post-title').text(data.title);
+                          temp.parent().find('.post-body').text(data.body);
+
+                        }
+                        
+                });
+                $(".edit-post").dialog( "close" );
+              });
+
            },
            error: function(data){
            		console.log(data);	
@@ -28,26 +51,6 @@ $(document).ready(function() {
        });
 
 	});
-  $("#Save-post").on('click', function() {
-    
-    var edited_id = $(".Epost-id").val();
-    var edited_title = $(".Epost-title").val();
-    var edited_body = $(".Epost-body").val();
-    console.log(edited_title);
-    console.log(edited_body);
-    $.ajax({
-            type: "post",
-            url: "/Posts/posteditdone",
-            dataType: "json",
-            data: {edited_title : edited_title,
-                   edited_body  : edited_body,
-                   edited_id    : edited_id
-            }
-            
-    });
-    $(".edit-post").dialog( "close" );
-  })
-  
-    
+      
   	
 });

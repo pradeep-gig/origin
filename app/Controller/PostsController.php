@@ -4,7 +4,7 @@
 		//public $components =array('Session');
 		
 		public function beforeFilter() {
-			$this->Auth->allow('index', 'view', 'postedit');
+			$this->Auth->allow('index', 'view', 'postedit', 'posteditdone');
 			$user_id = $this->Auth->user('id');
 			$this->set('user_id', $user_id);
 			$username = $this->Auth->user('username');
@@ -15,7 +15,8 @@
 
 		public function index() {
 			$allpost = $this->Post->find('all');
-			$this->set('posts', $allpost);
+			$sorted = Set::sort($allpost, '{n}.Post.created','asc');
+			$this->set('posts', $sorted);
 			
 		}
 
@@ -40,26 +41,6 @@
 					return $this->redirect(array('action' => 'index'));
 				}
 				$this->Session->setFlash(__('Unable to add your post.'));
-			}
-		}
-		public function edit($id = null) {
-			if(!$id) {
-				throw new NotFoundException(__('Invalid post'));
-			}
-			$post = $this->Post->findById($id);
-			if(!$post){
-				throw new NotFoundException(__('Invalid post'));
-			}
-			if($this->request->is(array('post', 'put'))) {
-				$this->Post->id = $id;
-				if($this->Post->save($this->request->data)) {
-					$this->Session->setFlash(__('Your post has been updated.'));
-					return $this->redirect(array('action' => 'index'));
-				}
-				$this->Session->setFlash(__('Unable to update your post.'));
-			}
-			if(!$this->request->data) {
-				$this->request->data = $post;
 			}
 		}
 		public function delete($id) {
@@ -94,9 +75,11 @@
 			$data['title'] = $_POST['edited_title'];
 			$data['body'] = $_POST['edited_body'];
 			$data['id'] = $_POST['edited_id'];
-			$this->Post->save($data);
-			echo $edited_title;
-			echo $edited_body;
+			if($this->Post->save($data)) {
+				echo json_encode($data);
+			}
+			//echo $edited_title;
+			//echo $edited_body;
 		}
 
 		public function isAuthorized($user) {
