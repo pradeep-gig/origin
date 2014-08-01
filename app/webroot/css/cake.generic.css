@@ -66,8 +66,9 @@ body {
    width: 0;
 }
 .drop-down {
-	 border: 1px solid black;
+	border: 1px solid black;
     color: white;
+    background-color: #a4a4a4 !important;
     margin-right: 2.4%;
     position: absolute;
     right: 20px;
@@ -81,6 +82,9 @@ body {
 	margin: 0px;
 	padding-left: 2px;
 	color: black;
+}
+.drop-down ul li:hover {
+	background-color: #fff !important;
 }
 .open{
 	display: block;

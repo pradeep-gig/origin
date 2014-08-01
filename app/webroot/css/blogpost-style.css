@@ -142,3 +142,12 @@
 	position:relative;
 	top:1px;
 }
+.add-post {
+	display: none;
+}
+.open {
+	display: block;
+}
+.edit-post{
+	display: none;
+}

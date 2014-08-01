@@ -1,10 +1,10 @@
 <?php
 	class PostsController extends AppController {
-		public $helpers = array('HTML', 'Form', 'Session');
-		public $components =array('Session');
+		//public $helpers = array('HTML', 'Form', 'Session');
+		//public $components =array('Session');
 		
 		public function beforeFilter() {
-			$this->Auth->allow('index', 'view');
+			$this->Auth->allow('index', 'view', 'postedit');
 			$user_id = $this->Auth->user('id');
 			$this->set('user_id', $user_id);
 			$username = $this->Auth->user('username');
@@ -14,8 +14,8 @@
 		}
 
 		public function index() {
-
-			$this->set('posts', $this->Post->find('all'));
+			$allpost = $this->Post->find('all');
+			$this->set('posts', $allpost);
 			
 		}
 
@@ -71,6 +71,34 @@
 				return $this->redirect(array('action' => 'index'));
 			}
 		}
+		public function postedit() {
+			$this->layout='ajax';
+			$this->autoRender=false;
+			$post_id=$_POST['post_id'];
+			if(!empty($post_id)){
+			$post = $this->Post->findById($post_id);
+			if(!$post){
+				//throw new NotFoundException(__('Invalid post'));
+				echo 'not found error';
+			}else{
+				echo json_encode(array('Post'=>$post['Post']));
+			}
+			}
+			//echo 'no error';
+		}
+
+		public function posteditdone() {
+			$this->autoRender = false;
+			$this->layout = 'ajax';
+
+			$data['title'] = $_POST['edited_title'];
+			$data['body'] = $_POST['edited_body'];
+			$data['id'] = $_POST['edited_id'];
+			$this->Post->save($data);
+			echo $edited_title;
+			echo $edited_body;
+		}
+
 		public function isAuthorized($user) {
    // All registered users can add posts
    if ($this->action === 'add') {

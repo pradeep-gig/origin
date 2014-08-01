@@ -27,6 +27,9 @@ class UsersController extends AppController {
  * @return void
  */
 	public function index() {
+		if (!$this->Auth->loggedIn()) {
+				$this->redirect(array('action' => 'login'));
+		}
 			$user_id = $this->Auth->user('id');
 			$this->set('user_id', $user_id);
 			$username = $this->Auth->user('username');
