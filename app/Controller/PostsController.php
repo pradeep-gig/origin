@@ -4,7 +4,7 @@
 		//public $components =array('Session');
 		
 		public function beforeFilter() {
-			$this->Auth->allow('index', 'view', 'postedit', 'posteditdone');
+			$this->Auth->allow('index', 'delete', 'view', 'postedit', 'posteditdone' );
 			$user_id = $this->Auth->user('id');
 			$this->set('user_id', $user_id);
 			$username = $this->Auth->user('username');

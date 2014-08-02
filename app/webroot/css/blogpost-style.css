@@ -1,6 +1,16 @@
 .form-body{
 	margin-top: 5% !important;
 }
+.liveform {
+ 		margin-top: 5% !important;
+
+}
+.author {
+	margin-left: 20px !important;
+}
+.date {
+	margin-left: 20px !important;
+}
 .blogpost-body {
  		background-color: silver;
  		border: 1px solid #949494;
@@ -8,21 +18,39 @@
     	margin-left: 15%;
     	width: 70%;
  }
+ .livepost {
+ 		background-color: silver;
+ 		border: 1px solid #949494;
+    	border-radius: 37px 0;
+    	margin-left: 15%;
+    	width: 70%;	
+    	display: none;
+ }
  .post-title{
  	color: #ff2b2b;
  	font-weight: bold;
  	font-size: 20px;
  	margin: 1em ;
  }
+ .livepost-title {
+ 	color: #ff2b2b;
+ 	font-weight: bold;
+ 	font-size: 20px;
+ 	margin: 1em ;	
+ }
  .post-body {
  	margin: 1em ;
  	color: #26327a;
+ }
+ .livepost-body {
+ 	margin: 1em ;
+ 	color: #26327a;	
  }
  .created-by {
  	background-color: orange !important;
  	border: 1px solid #ff8800;
 	border-radius: 37px 0;
-	width: 245px;
+	width: 290px;
 	float: right;
 }	
  .button {
@@ -88,6 +116,8 @@
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #aade7c;
+	margin-bottom: 6px;
+    margin-left: 7px;
 }
 .edit-button:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a) );
@@ -132,6 +162,8 @@
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #810e05;
+	margin-bottom: 6px;
+    margin-left: 7px;
 }
 .delete-button:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537) );
